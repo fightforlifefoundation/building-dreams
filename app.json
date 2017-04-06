@@ -3,6 +3,6 @@
   "description": "Fight For Life App",
   "repository": "https://github.com/fightforlifefoundation/building-dreams",
   "logo": "http://node-js-sample.herokuapp.com/node.svg",
-  "keywords": ["node", "express", "static"],
+  "keywords": ["building dreams", "fight for life", "Marlin Jackson"],
   "image": "heroku/nodejs"
 }

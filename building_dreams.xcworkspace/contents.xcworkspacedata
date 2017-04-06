@@ -11,9 +11,6 @@
       location = "group:package.json">
    </FileRef>
    <FileRef
-      location = "group:BuildingDreams.jpg">
-   </FileRef>
-   <FileRef
       location = "group:Procfile">
    </FileRef>
    <FileRef

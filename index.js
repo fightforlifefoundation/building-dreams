@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var pg = require('pg');
-
+var students = require(__dirname + '/views/pages/students.js');
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -12,6 +12,10 @@ app.set('view engine', 'ejs');
 
 app.get('/', function(request, response) {
   response.render('pages/index');
+});
+
+app.get('/student', function(request, response) {
+  response.render('pages/student-info', {studentsinfo: students});
 });
 
 app.listen(app.get('port'), function() {

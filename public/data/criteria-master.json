@@ -1,0 +1,26 @@
+[
+  {
+    "Id": "1",
+    "Name": "Class Participation",
+    "Criteria":
+      [
+        [1,"Contributes to class discussions", "Does not contribute to class discussions"],
+        [2, "Completes assignments on time","Does not complete assignments on time"],
+        [3, "Actively participates in Building Dreams", "Does not participate in Building Dreams"],
+        [4, "Attends school regularly","Does not attend school regularly"],
+        [5, "Shows consistent work ethic","Does not show consistent work ethic"]
+      ]
+  },
+  {
+    "Id": "2",
+    "Name": "Class Participation",
+    "Criteria":
+    [
+      [1,"Follows school rules", "Does not follow school rules"],
+      [2, "Follows instructions", "Does not follow instructions"],
+      [3, "Respects teachers and classmates", "Does not respect teachers and classmates"],
+      [4, "Displays self-discipline", "Does not display self-discipline"],
+      [5, "Displays self-respect", "Does not display self-respect"]
+    ]
+  }
+]

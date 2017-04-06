@@ -53,6 +53,7 @@ p{
 .primary-button .arrow{
   background-color: #137ACA;
   width: 50px;
+  padding-right: 10px;
 }
 
 .secondary-button{

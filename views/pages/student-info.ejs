@@ -3,22 +3,27 @@
 <head>
   <% include ../partials/header.ejs %>
 
-  <script>
-    var students = require("./students.js")
-  </script>
 </head>
 
 <body>
 
   <% include ../partials/nav.ejs %>
 
-<div class="jumbotron text-center">
+<div class="text-center">
   <div class="container">
-    Heading
+    <div>
+      <div><h2>Update Weekly scores</h2></div>
+      <div>
+        <table align="center" width="20%" cellspacing="25" cellpadding="105">
+          <% studentsinfo.forEach(function(r) { %>
+          <tr><td align="left"><%= r.First_Name + " " + r.Last_Name %></td> <td align="right"><img src="../../DownChevronIcon.jpg" height="10"></td></tr>
+          <% }); %>
+        </table>
+      </div>
+    </div>
+
   </div>
-  <table>
-    <tr><td>Student 1 students.getStudentList()</td></tr>
-  </table>
+
 </div>
 
 </body>

@@ -82,7 +82,7 @@ input[type=radio]{
 
 
 .jumbotron {
-  background: #532F8C;
+  background: #000066;
   color: white;
   padding-bottom: 80px; }
   .jumbotron .btn-primary {
@@ -96,7 +96,7 @@ input[type=radio]{
     margin: 1em auto 2em; }
   .navbar + .jumbotron {
     margin-top: -20px; }
-  .jumbotron .lang-logo {
+  .jumbotron .logo {
     display: block;
     background: #B01302;
     border-radius: 50%;
@@ -105,6 +105,11 @@ input[type=radio]{
     height: 100px;
     margin: auto;
     border: 2px solid white; }
-    .jumbotron .lang-logo img {
+    .jumbotron .logo img {
       max-width: 100%; }
+    .header-img {
+    height: auto; 
+    width: 100%;
+}
+
 

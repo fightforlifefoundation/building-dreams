@@ -24,8 +24,8 @@ app.listen(app.get('port'), function() {
 
 console.log ('process.env.DATABASE_URL');
 
-
 app.get('/db', function (request, response) {
+  pg.defaults.ssl = true;
   pg.connect(process.env.DATABASE_URL, function(err, client, done) {
 	  console.log (process.env.DATABASE_URL);
     client.query('SELECT * FROM test_table', function(err, result) {
@@ -37,4 +37,3 @@ app.get('/db', function (request, response) {
     });
   });
 });
-

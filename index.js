@@ -29,7 +29,7 @@ app.post('/test-auth', login.ensureAuthenticated, function(req, res){
   console.log('Is request authenticated? ' + req.isAuthenticated());
   console.log('req.user: ' + JSON.stringify(req.user));
 
-  res.json({ done: true, userId: req.user.id, username: req.user.username });
+  res.json({ done: true, userId: req.user.id, username: req.user.username, role: req.user.role});
 });
 
 app.set('port', (process.env.PORT || 5000));

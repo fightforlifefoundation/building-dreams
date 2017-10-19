@@ -1,7 +1,37 @@
+
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var pg = require('pg');
 var students = require(__dirname + '/views/pages/students.js');
+var passport = require('passport');
+var bodyParser = require('body-parser');
+var login = require('./auth/login');
+
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+app.use(session({
+  secret: 'black',
+  saveUninitialized: false,
+  resave: false,
+  cookie: { maxAge: 600000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+login.initialize(passport);
+
+app.post('/login', passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }));;
+
+app.post('/test-auth', login.ensureAuthenticated, function(req, res){
+  console.log('Is request authenticated? ' + req.isAuthenticated());
+  console.log('req.user: ' + JSON.stringify(req.user));
+
+  res.json({ done: true, userId: req.user.id, username: req.user.username });
+});
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -17,6 +47,7 @@ app.get('/', function(request, response) {
 app.get('/student', function(request, response) {
   response.render('pages/student-info', {studentsinfo: students});
 });
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
@@ -37,3 +68,4 @@ app.get('/db', function (request, response) {
     });
   });
 });
+

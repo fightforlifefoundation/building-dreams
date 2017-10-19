@@ -3,19 +3,8 @@ var express = require('express');
 var app = express();
 var pg = require('pg');
 var students = require(__dirname + '/views/pages/students.js');
-var passport = require('passport')
-  , LocalStrategy = require('passport-local').Strategy;
+var passport = require('passport');
 var bodyParser = require('body-parser');
-	
-passport.use(new LocalStrategy(
-  function(username, password, done) {
-    console.log('username: ' + username + ', password: ' + password);
-
-    return done(null, { username: username });
-
-    console.log('outside findOne');
-  }
-));
 
 app.use(passport.initialize());
 app.use(bodyParser.urlencoded({
@@ -23,6 +12,7 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+require('./auth/login')(passport);
 app.post('/login', passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }), function(req, res) {
   res.json({ success: true });
 });

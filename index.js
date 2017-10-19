@@ -4,30 +4,34 @@ var app = express();
 var pg = require('pg');
 var students = require(__dirname + '/views/pages/students.js');
 var passport = require('passport')
-	, LocalStrategy = require('passport-local').Strategy;
+  , LocalStrategy = require('passport-local').Strategy;
+var bodyParser = require('body-parser');
 	
 passport.use(new LocalStrategy(
   function(username, password, done) {
-    User.findOne({ username: username }, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!user.validPassword(password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
+    console.log('username: ' + username + ', password: ' + password);
+
+    return done(null, { username: username });
+
+    console.log('outside findOne');
   }
 ));
 
-app.post('/login',
-  passport.authenticate('local', { successRedirect: '/',
-                                   failureRedirect: '/login',
-                                   failureFlash: false })
-);
-	
-	
+app.use(passport.initialize());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
+app.use(bodyParser.json());
+
+app.post('/login', passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }), function(req, res) {
+  res.json({ success: true });
+});
+
+app.post('/auth', function(req, res){
+  console.log("body parsing", req.body);
+  //should be something like: {username: YOURUSERNAME, password: YOURPASSWORD}
+  res.json({ done: true });
+});
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -65,13 +69,4 @@ app.get('/db', function (request, response) {
     });
   });
 });
-
-
-
-//Auth temporary work
-
-
-
-
-
 

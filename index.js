@@ -1,26 +1,35 @@
 
 var express = require('express');
+var session = require('express-session');
 var app = express();
 var pg = require('pg');
 var students = require(__dirname + '/views/pages/students.js');
 var passport = require('passport');
 var bodyParser = require('body-parser');
+var login = require('./auth/login');
 
-app.use(passport.initialize());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
 app.use(bodyParser.json());
 
-require('./auth/login')(passport);
-app.post('/login', passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }), function(req, res) {
-  res.json({ success: true });
-});
+app.use(session({
+  secret: 'black',
+  saveUninitialized: false,
+  resave: false,
+  cookie: { maxAge: 600000 }
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+login.initialize(passport);
 
-app.post('/auth', function(req, res){
-  console.log("body parsing", req.body);
-  //should be something like: {username: YOURUSERNAME, password: YOURPASSWORD}
-  res.json({ done: true });
+app.post('/login', passport.authenticate('local', { successRedirect: '/success', failureRedirect: '/failure' }));;
+
+app.post('/test-auth', login.ensureAuthenticated, function(req, res){
+  console.log('Is request authenticated? ' + req.isAuthenticated());
+  console.log('req.user: ' + JSON.stringify(req.user));
+
+  res.json({ done: true, userId: req.user.id, username: req.user.username });
 });
 
 app.set('port', (process.env.PORT || 5000));

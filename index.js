@@ -1,7 +1,34 @@
+
 var express = require('express');
 var app = express();
 var pg = require('pg');
 var students = require(__dirname + '/views/pages/students.js');
+var passport = require('passport')
+	, LocalStrategy = require('passport-local').Strategy;
+	
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
+app.post('/login',
+  passport.authenticate('local', { successRedirect: '/',
+                                   failureRedirect: '/login',
+                                   failureFlash: false })
+);
+	
+	
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(express.static(__dirname + '/public'));
@@ -17,6 +44,7 @@ app.get('/', function(request, response) {
 app.get('/student', function(request, response) {
   response.render('pages/student-info', {studentsinfo: students});
 });
+
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
@@ -37,3 +65,13 @@ app.get('/db', function (request, response) {
     });
   });
 });
+
+
+
+//Auth temporary work
+
+
+
+
+
+
